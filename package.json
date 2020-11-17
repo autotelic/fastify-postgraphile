@@ -1,6 +1,6 @@
 {
   "name": "fastify-postgraphile",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "PostGraphile plugin for fastify",
   "main": "index.js",
   "directories": {
