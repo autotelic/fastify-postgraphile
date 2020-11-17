@@ -17,6 +17,7 @@
   "keywords": [
     "fastify",
     "postgraphile",
+    "postgresql",
     "postgres",
     "psql",
     "graphql",
