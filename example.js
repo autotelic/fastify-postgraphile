@@ -4,7 +4,6 @@ const postGraphile = require('.')
 const { DATABASE_URL } = process.env
 
 module.exports = function (fastify, options, next) {
-  try {
     fastify.register(postGraphile, { database: DATABASE_URL })
 
     fastify.get('/', (req, reply) => {
@@ -18,7 +17,4 @@ module.exports = function (fastify, options, next) {
     })
 
     next()
-  } catch (error) {
-    next(error)
-  }
 }
