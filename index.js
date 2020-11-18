@@ -5,9 +5,6 @@ const { plugin } = require('./lib')
 
 const DECORATOR = 'fastify-postgraphile'
 
-module.exports = fastifyPlugin(function (fastify, options, next) {
-  fastify.addHook('onRequest', plugin(options))
-  next()
-}, {
+module.exports = fastifyPlugin(plugin, {
   name: DECORATOR
 })

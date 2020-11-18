@@ -33,7 +33,9 @@
   },
   "homepage": "https://github.com/autotelic/fastify-postgraphile#readme",
   "dependencies": {
-    "fastify-plugin": "^3.0.0"
+    "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
+    "fastify-plugin": "^3.0.0",
+    "postgraphile": "^4.9.2"
   },
   "devDependencies": {
     "tap": "^14.0.0",
