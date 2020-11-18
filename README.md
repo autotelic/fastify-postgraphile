@@ -2,6 +2,10 @@
 
 Fastify plugin for PostGraphile.
 
+Takes inspiration from the following resources:
+- [Using Postgraphile as a library](https://www.graphile.org/postgraphile/usage-library)
+- [Postgraphile's Fastify v3 example](https://github.com/graphile/postgraphile/blob/v4/examples/servers/fastify3/rum-and-raisin.ts)
+
 ## Run the example
 
 #### Configure and run a local Postgres Container
@@ -27,3 +31,7 @@ npm run example -- -l info -w
 http localhost:3000
 http post localhost:3000
 ```
+
+#### Explore Graphiql
+
+[localhost:3000/graphiql](localhost:3000/graphiql)
