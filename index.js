@@ -6,6 +6,7 @@ const {
   PostGraphileResponseFastify3
 } = require('postgraphile')
 const simplifyInflector = require('@graphile-contrib/pg-simplify-inflector')
+const merge = require('lodash.merge')
 
 const DECORATOR = 'fastify-postgraphile'
 
@@ -33,10 +34,12 @@ async function postGraphilePlugin (fastify, opts) {
   const {
     database,
     schemas = 'public',
-    settings = defaultSettings
+    settings
   } = opts
 
-  const middleware = postgraphile(database, schemas, settings)
+  const deepMergedSettings = merge({}, defaultSettings, settings)
+
+  const middleware = postgraphile(database, schemas, deepMergedSettings)
 
   const convertHandler = (handler) => (
     request,
