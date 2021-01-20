@@ -6,7 +6,7 @@ const {
   PostGraphileResponseFastify3
 } = require('postgraphile')
 const simplifyInflector = require('@graphile-contrib/pg-simplify-inflector')
-const merge = require('lodash.merge')
+const mergeWith = require('lodash.mergeWith')
 
 const DECORATOR = 'fastify-postgraphile'
 
@@ -37,7 +37,7 @@ async function postGraphilePlugin (fastify, opts) {
     settings
   } = opts
 
-  const deepMergedSettings = merge({}, defaultSettings, settings)
+  const deepMergedSettings = mergeWith({}, defaultSettings, settings, concatNestedArrays)
 
   const middleware = postgraphile(database, schemas, deepMergedSettings)
 
@@ -70,3 +70,9 @@ async function postGraphilePlugin (fastify, opts) {
 module.exports = fastifyPlugin(postGraphilePlugin, {
   name: DECORATOR
 })
+
+function concatNestedArrays (objValue, srcValue) {
+  if (Array.isArray(objValue)) {
+    return objValue.concat(srcValue)
+  }
+}
