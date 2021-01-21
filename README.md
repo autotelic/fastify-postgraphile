@@ -39,15 +39,20 @@ module.exports = function (fastify, options, next) {
 | ------- | :---: | :---: | :---: | --- |
 | `database` | **Required** | String/Object | - | An object or string that will be passed to the pg library and used to connect to a PostgreSQL backend, OR a pg.Pool to use. |
 | `schemas` | Optional | String/[String] | 'public' | A string, or array of strings, which specifies the PostgreSQL schema(s) to expose via PostGraphile; defaults to 'public' |
-| `settings` | Optional | Object | - | An object containing [PostGraphile options](options-reference) to be combined with the [default recommended options](Recommended-Options). Conflicts are overwritten |
+| `settings` | Optional | Object | - | An object containing [PostGraphile options](options-reference) to be combined with the [default recommended options](Recommended-Options). |
 
 ### Default Options
 
 The default options applied by `fastify-postgraphile` are the [recommended PostGraphile options](Recommended-Options).
 
-These defaults can be added to or changed by passing additional PostGraphile Options in with the `settings` object.
+These defaults can be added to or changed by passing additional PostGraphile Options in with the `settings` object. The `` and `` arrays will be concatenaded with any new options passed in.
 
-Note: If you add additional plugins using the `appendPlugins` option and would like to still use the default [`simplifyInflector` plugin](pg-simplify-inflector) it will need to be added again as part of your `settings` object. 
+Note: If you need to disable the default [`simplifyInflector` plugin](pg-simplify-inflector), pass the exported reference to it into the `skipPlugins` option array. 
+
+e.g.
+```js
+skipPlugins: [fastifyPostGraphile.DEFAULT_INFLECTOR]
+```
 
 ## Run the example
 
