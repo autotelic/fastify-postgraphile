@@ -13,11 +13,11 @@ npm install @autotelic/fastify-postgraphile
 ```
 
 ```js
-const postGraphile = require('@autotelic/fastify-postgraphile')
+const fastifyPostGraphile = require('@autotelic/fastify-postgraphile')
 const { DATABASE_URL } = process.env
 
 module.exports = function (fastify, options, next) {
-    fastify.register(postGraphile, { database: DATABASE_URL })
+    fastify.register(fastifyPostGraphile, { database: DATABASE_URL })
 
     fastify.get('/', (req, reply) => {
       reply.type('application/json')
@@ -33,24 +33,21 @@ module.exports = function (fastify, options, next) {
 }
 ```
 
-### PostGraphile Options
+### API: fastifyPostGraphile(database, schemas, settings)
 
-| Option | Status | Type | Default | Description |
+| Name | Status | Type | Default | Description |
 | ------- | :---: | :---: | :---: | --- |
-| `database` | **Required** | String | - | A database connection string |
-| `schemas` | Optional | String | 'public' | Description |
-| `settings` | Optional | Object | - | An object containing PostGraphile settings to be combined with the default settings. **Defaults are not overwritten.** |
-| `overrides` | Optional | Object | - | An object containing PostGraphile settings that will **overwrite default settings.** |
+| `database` | **Required** | String/Object | - | An object or string that will be passed to the pg library and used to connect to a PostgreSQL backend, OR a pg.Pool to use. |
+| `schemas` | Optional | String/[String] | 'public' | A string, or array of strings, which specifies the PostgreSQL schema(s) to expose via PostGraphile; defaults to 'public' |
+| `settings` | Optional | Object | - | An object containing [PostGraphile options](options-reference) to be combined with the [default recommended options](Recommended-Options). Conflicts are overwritten |
 
-### Default Settings
+### Default Options
 
 The default options applied by `fastify-postgraphile` are the [recommended PostGraphile options](Recommended-Options).
 
-These defaults can be added to or changed by passing additional PostGraphile Options in with either the `settings` object or the `overrides` object.
+These defaults can be added to or changed by passing additional PostGraphile Options in with the `settings` object.
 
-Options in the `settings` object will be deeply merged with the default options but the defaults will not be changed. 
-
-Options in the `overrides` object will replace any corresponding default options. 
+Note: If you add additional plugins using the `appendPlugins` option and would like to still use the default [`simplifyInflector` plugin](pg-simplify-inflector) it will need to be added again as part of your `settings` object. 
 
 ## Run the example
 
@@ -83,3 +80,5 @@ http post localhost:3000
 [localhost:3000/graphiql](localhost:3000/graphiql)
 
 [Recommended-Options][https://www.graphile.org/postgraphile/usage-library/#recommended-options]
+[options-reference][https://www.graphile.org/postgraphile/usage-library/#api-postgraphilepgconfig-schemaname-options]
+[pg-simplify-inflector][https://www.npmjs.com/package/@graphile-contrib/pg-simplify-inflector]
