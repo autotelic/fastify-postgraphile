@@ -6,7 +6,7 @@ const {
   PostGraphileResponseFastify3
 } = require('postgraphile')
 const simplifyInflector = require('@graphile-contrib/pg-simplify-inflector')
-const mergeWith = require('lodash.mergeWith')
+const mergeWith = require('lodash.mergewith')
 
 const DECORATOR = 'fastify-postgraphile'
 
@@ -34,12 +34,23 @@ async function postGraphilePlugin (fastify, opts) {
   const {
     database,
     schemas = 'public',
-    settings
+    settings = {},
+    overrides = {}
   } = opts
 
-  const deepMergedSettings = mergeWith({}, defaultSettings, settings, concatNestedArrays)
+  // Deeply merge together user settings and default settings.
+  // New settings will be added
+  // Array settings will be concatenated together
+  // Existing default settings will be retained
+  const deepMergedSettings = mergeWith({}, settings, defaultSettings, concatNestedArrays)
 
-  const middleware = postgraphile(database, schemas, deepMergedSettings)
+  // Apply overrides settings to replace/change any default settings
+  const mergedSettingsWithOverrides = {
+    ...deepMergedSettings,
+    ...overrides
+  }
+
+  const middleware = postgraphile(database, schemas, mergedSettingsWithOverrides)
 
   const convertHandler = (handler) => (
     request,
