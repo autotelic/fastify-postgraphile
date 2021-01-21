@@ -69,8 +69,17 @@ ifconfig -u | grep 'inet ' | grep -v 127.0.0.1 | cut -d\  -f2 | head -1
 #### Add the following to your `.envrc` file:
 `export DATABASE_URL=postgres://postgres:examplepassword@<your-public-ip>:5432/postgres?sslmode=disable`
 
-#### Run the server
+Allow .envrc file
+```sh
+direnv allow .
 ```
+### Run the example migration
+```sh
+npx -p pg -p node-pg-migrate -c "node-pg-migrate up -m examples/migrations"
+```
+
+#### Run the server
+```sh
 npm run example -- -l info -w
 ```
 

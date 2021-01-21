@@ -1,6 +1,6 @@
 'use strict'
 
-const fastifyPostGraphile = require('.')
+const fastifyPostGraphile = require('..')
 const { DATABASE_URL } = process.env
 
 module.exports = function (fastify, options, next) {
