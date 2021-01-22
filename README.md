@@ -39,15 +39,15 @@ module.exports = function (fastify, options, next) {
 | ------- | :---: | :---: | :---: | --- |
 | `database` | **Required** | String/Object | - | An object or string that will be passed to the pg library and used to connect to a PostgreSQL backend, OR a pg.Pool to use. |
 | `schemas` | Optional | String/[String] | 'public' | A string, or array of strings, which specifies the PostgreSQL schema(s) to expose via PostGraphile; defaults to 'public' |
-| `settings` | Optional | Object | - | An object containing [PostGraphile options](options-reference) to be combined with the [default recommended options](Recommended-Options). |
+| `settings` | Optional | Object | - | An object containing [PostGraphile options][options-reference] to be combined with the [default recommended options][Recommended-Options]. |
 
 ### Default Options
 
-The default options applied by `fastify-postgraphile` are the [recommended PostGraphile options](Recommended-Options).
+The default options applied by `fastify-postgraphile` are the [recommended PostGraphile options][Recommended-Options].
 
 These defaults can be added to or changed by passing additional PostGraphile Options in with the `settings` object. The `extendedErrors` and `appendPlugins` arrays will be concatenated with any new options passed in.
 
-Note: If you need to disable the default [`simplifyInflector` plugin](pg-simplify-inflector), pass the exported reference to it into the `skipPlugins` option array. 
+Note: If you need to disable the default [`simplifyInflector` plugin][pg-simplify-inflector], pass the exported reference to it into the `skipPlugins` option array. 
 
 e.g.
 ```js
@@ -91,8 +91,8 @@ http post localhost:3000
 
 #### Explore Graphiql
 
-[localhost:3000/graphiql](localhost:3000/graphiql)
+[http://localhost:3000/graphiql](http://localhost:3000/graphiql)
 
-[Recommended-Options][https://www.graphile.org/postgraphile/usage-library/#recommended-options]
-[options-reference][https://www.graphile.org/postgraphile/usage-library/#api-postgraphilepgconfig-schemaname-options]
-[pg-simplify-inflector][https://www.npmjs.com/package/@graphile-contrib/pg-simplify-inflector]
+[Recommended-Options]: https://www.graphile.org/postgraphile/usage-library/#recommended-options
+[options-reference]: https://www.graphile.org/postgraphile/usage-library/#api-postgraphilepgconfig-schemaname-options
+[pg-simplify-inflector]: https://www.npmjs.com/package/@graphile-contrib/pg-simplify-inflector
