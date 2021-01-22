@@ -3,12 +3,9 @@
   "version": "0.0.0",
   "description": "PostGraphile plugin for fastify",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
-    "test": "test",
-    "example": "fastify start example.js",
+    "test": "tap -R classic -j1",
+    "example": "fastify start examples/example.js",
     "lint": "standard",
     "fix": "npm run lint -- --fix",
     "validate": "npm run lint && npm run test"
@@ -35,18 +32,28 @@
   "dependencies": {
     "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
     "fastify-plugin": "^3.0.0",
+    "lodash.mergewith": "^4.6.2",
     "postgraphile": "^4.10.0-alpha.0"
   },
   "devDependencies": {
-    "tap": "^14.0.0",
     "fastify": "^3.0.0",
     "fastify-cli": "^2.5.1",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.2.11",
     "standard": "^14.3.4",
-    "lint-staged": "^10.2.11"
+    "tap": "^14.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.{js,jsx}": [
       "npm run fix"
     ]
+  },
+  "engines": {
+    "node": ">= 12.18.4"
   }
 }

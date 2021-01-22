@@ -5,7 +5,8 @@ const {
   postgraphile,
   PostGraphileResponseFastify3
 } = require('postgraphile')
-const simplifyInflector = require('@graphile-contrib/pg-simplify-inflector')
+const DEFAULT_INFLECTOR = require('@graphile-contrib/pg-simplify-inflector')
+const mergeWith = require('lodash.mergewith')
 
 const DECORATOR = 'fastify-postgraphile'
 
@@ -18,7 +19,7 @@ const defaultSettings = {
   ignoreIndexes: false,
   showErrorStack: 'json',
   extendedErrors: ['hint', 'detail', 'errcode'],
-  appendPlugins: [simplifyInflector],
+  appendPlugins: [DEFAULT_INFLECTOR],
   exportGqlSchemaPath: 'schema.graphql',
   graphiql: true,
   enhanceGraphiql: true,
@@ -33,10 +34,14 @@ async function postGraphilePlugin (fastify, opts) {
   const {
     database,
     schemas = 'public',
-    settings = defaultSettings
+    settings = {}
   } = opts
 
-  const middleware = postgraphile(database, schemas, settings)
+  // Deeply merge together user settings and default settings.
+  // Array settings will be concatenated together
+  const deepMergedSettings = mergeWith({}, defaultSettings, settings, concatNestedArrays)
+
+  const middleware = postgraphile(database, schemas, deepMergedSettings)
 
   const convertHandler = (handler) => (
     request,
@@ -64,6 +69,13 @@ async function postGraphilePlugin (fastify, opts) {
   }
 }
 
+function concatNestedArrays (objValue, srcValue) {
+  if (Array.isArray(objValue)) {
+    return objValue.concat(srcValue)
+  }
+}
+
+module.exports.DEFAULT_INFLECTOR = DEFAULT_INFLECTOR
 module.exports = fastifyPlugin(postGraphilePlugin, {
   name: DECORATOR
 })
