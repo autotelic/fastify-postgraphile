@@ -45,7 +45,7 @@ module.exports = function (fastify, options, next) {
 
 The default options applied by `fastify-postgraphile` are the [recommended PostGraphile options](Recommended-Options).
 
-These defaults can be added to or changed by passing additional PostGraphile Options in with the `settings` object. The `` and `` arrays will be concatenaded with any new options passed in.
+These defaults can be added to or changed by passing additional PostGraphile Options in with the `settings` object. The `extendedErrors` and `appendPlugins` arrays will be concatenated with any new options passed in.
 
 Note: If you need to disable the default [`simplifyInflector` plugin](pg-simplify-inflector), pass the exported reference to it into the `skipPlugins` option array. 
 

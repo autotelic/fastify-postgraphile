@@ -69,14 +69,13 @@ async function postGraphilePlugin (fastify, opts) {
   }
 }
 
-module.exports = fastifyPlugin(postGraphilePlugin, {
-  name: DECORATOR
-})
-
-module.exports.DEFAULT_INFLECTOR = DEFAULT_INFLECTOR
-
 function concatNestedArrays (objValue, srcValue) {
   if (Array.isArray(objValue)) {
     return objValue.concat(srcValue)
   }
 }
+
+module.exports.DEFAULT_INFLECTOR = DEFAULT_INFLECTOR
+module.exports = fastifyPlugin(postGraphilePlugin, {
+  name: DECORATOR
+})
